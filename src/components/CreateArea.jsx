@@ -5,40 +5,20 @@ import Zoom from "@material-ui/core/Zoom";
 import { useForm } from "react-hook-form";
 
 function CreateArea(props) {
-  // const [createNote, setCreateNote] = useState({
-  //   title: "",
-  //   content: "",
-  // });
+
 
   const [isExpanded, setIsExpanded] = useState(false);
 
   const { register, handleSubmit, errors } = useForm();
-  
 
-  // function updateChange(event) {
-  //   const { name, value } = event.target;
-  //   setCreateNote((prevNote) => {
-  //     return {
-  //       ...prevNote,
-  //       [name]: value,
-  //     };
-  //   });
-  // }
 
-  // function submitNote(event) {
-  //   props.onAdd(createNote);
-  //   setCreateNote({
-  //     title: "",
-  //     content: "",
-  //   });
-    
-  // }
-  const submitNote = data => 
+  const submitNote = (data, event) => {
     props.onAdd(data);
-    
-  
+    event.target.reset();
+  }
 
-  function expand(){
+
+  function expand() {
     setIsExpanded(true);
   }
 
@@ -46,17 +26,13 @@ function CreateArea(props) {
     <div>
       <form onSubmit={handleSubmit(submitNote)} className="create-note" >
         {isExpanded && <input
-          //onChange={updateChange}
-          //value={createNote.title}
           name="title"
           placeholder="Title"
-          ref={register({ required: true ,maxLength: 15 })}
+          ref={register({ required: true, maxLength: 15 })}
         />}
         {errors.title && <p>Title is required</p>}
         <textarea
           onClick={expand}
-          // onChange={updateChange}
-          //value={createNote.content}
           name="content"
           placeholder="Take a note..."
           rows={isExpanded ? "3" : "1"}
