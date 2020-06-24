@@ -28,9 +28,9 @@ function CreateArea(props) {
         {isExpanded && <input
           name="title"
           placeholder="Title"
-          ref={register({ required: true, maxLength: 15 })}
+          ref={register({ required: true, maxLength: {value:15, message:"Keep title short" }})}
         />}
-        {errors.title && <p>Title is required</p>}
+        <p>{errors?.title?.message}</p>
         <textarea
           onClick={expand}
           name="content"
@@ -38,7 +38,7 @@ function CreateArea(props) {
           rows={isExpanded ? "3" : "1"}
           ref={register({ required: true })}
         />
-        {errors.content && <p>Content is required</p>}
+        {(errors.content || errors.title) && <p> <span role="img" aria-label="Error">⚠️ </span> Do not leave fields empty </p>}
         <Zoom in={isExpanded}>
           <Fab type="submit">
             <AddIcon />
